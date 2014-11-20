@@ -1,7 +1,7 @@
 {
   "name": "autopoke",
   "version": "1.0.0",
-  "description": "Automatically pokes people on Facebook",
+  "description": "Automatically poke people on Facebook",
   "main": "app.js",
   "dependencies": {
     "express": "^4.10.2",
@@ -16,11 +16,7 @@
     "type": "git",
     "url": "https://github.com/ajay-gandhi/autopoke.git"
   },
-  "keywords": [
-    "facebook",
-    "poke",
-    "auto"
-  ],
+  "keywords": ["facebook", "poke", "auto"],
   "author": "Ajay Gandhi",
   "license": "ISC",
   "bugs": {
