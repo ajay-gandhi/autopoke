@@ -93,9 +93,8 @@ module.exports = (function () {
           if (timeline_header) {
             var poke_button = self.browser.link('Poke');
             // Check if the button is a child of the header
-            console.log(is_descendant(poke_button, timeline_header));
 
-            if (poke_button) {
+            if (poke_button && is_descendant(poke_button, timeline_header)) {
               // The poke button exists so click it
               return self.browser.clickLink('Poke');
 
