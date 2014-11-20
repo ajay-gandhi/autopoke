@@ -4,14 +4,31 @@
 var Zombie = require('zombie'),
     Promise = require('es6-promise').Promise;
 
+// Load the mobile website because it has fewer hacks
 var fb_home = 'http://m.facebook.com';
 
+/*********************************** Module ***********************************/
+
+/**
+ * The Poker object.
+ *   Each method goes back to the Facebook home page (fb_home) after completing
+ *   its function.
+ */
 module.exports = (function () {
 
   function Poker() {
     this.browser = null;
   }
 
+  /**
+   * Init function for the object. Creates a headless browser at the given ip
+   *   and logs into Facebook with the given email and password
+   * Requires: [string] email - The email address used to login to Facebook
+   *           [string] password - The password for the Facebook account
+   *           [string] ip - The IP address at which to initialize the browser
+   * Returns: [Promise] An initialized Poker object if the login was successful
+   *   or false if the login failed.
+   */
   Poker.prototype.init = function (email, password, ip) {
     var self = this;
     var browser;
@@ -52,7 +69,7 @@ module.exports = (function () {
   /**
    * Pokes someone whose name is the closest match to pokee.
    * Requires: [string] pokee - The name of the person to poke
-   * Returns: [boolean] True if the person was poked, otherwise false
+   * Returns: [Promise] True if the person was poked, otherwise false
    */
   Poker.prototype.poke = function(pokee) {
     var self = this;
@@ -112,13 +129,20 @@ module.exports = (function () {
 })();
 
 /******************************* Local Functions ******************************/
-var is_descendant = function (child, parent) {
-  var node = child.parentNode;
+/**
+ * Checks whether the given DOM element is a descendant of DOM element parent.
+ * Requires: [DOM Node] elm - The element to test
+ *           [DOM Node] parent - The element which may be a parent of elm
+ * Returns: [boolean] True if elm is a child of parent (or of parent's children,
+ *   etc), otherwise false
+ */
+var is_descendant = function (elm, parent) {
+  var node = elm.parentNode;
   while (node != null) {
-     if (node == parent) {
-         return true;
-     }
-     node = node.parentNode;
+    if (node == parent) {
+      return true;
+    }
+    node = node.parentNode;
   }
   return false;
 }
