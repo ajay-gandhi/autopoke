@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="style.css" />
+  <title>Facebook Autopoker</title>
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script type="text/javascript" src="main.js"></script>
+</head>
+<body>
+  <div class="container-fluid" id="new-poker">
+    <h1>Facebook Autopoker</h1>
+    <div id="result"></div>
+    <form role="form" id="new-poker-form">
+      <p class="lead">Facebook Login</p>
+      <div class="form-group">
+        <label class="sr-only" for="email">Email</label>
+        <input type="text" class="form-control new-poker-input" id="email" name="email" placeholder="Email" autofocus />
+      </div>
+      <div class="form-group">
+        <label class="sr-only" for="password">Password</label>
+        <input type="password" class="form-control new-poker-input" id="password" name="password" placeholder="Password" />
+      </div>
+      <div class="form-group" id="pokee">
+        <p class="lead">Who should we poke?</p>
+        <label class="sr-only" for="pokee">Pokee</label>
+        <input type="text" class="form-control new-poker-input" id="pokee" name="pokee" placeholder="Full name" />
+      </div>
+      <p class="text-center">
+        <button type="submit" class="btn btn-default btn-lg">Autopoke</button>
+      </p>
+    </form>
+  </div>
+</body>
+</html>
