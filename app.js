@@ -24,7 +24,7 @@ app.get('/begin', function (req, res) {
 
   // Initialize the poker with the given email and pw, then poke the person
   newPoker
-    .init(email, password)
+    .init(email, password, server_ip_address)
     .then(function (initialized) {
       if (initialized == false) {
         res.send(JSON.stringify({
