@@ -45,9 +45,8 @@ module.exports = (function () {
       browser
         .visit(fb_home)
         .then(function () {
-          return browser.wait();
-        })
-        .then(function () {
+          console.log(browser.html('body'));
+
           // Fill in the credentials
           browser.fill('email', email);
           browser.fill('pass', password);
