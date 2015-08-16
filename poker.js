@@ -1,18 +1,19 @@
 /**
- * This module controls a browser for a specific person
+ * This module handles poking for a specific person
  */
-var Zombie  = require('zombie'),
-    Promise = require('es6-promise').Promise;
+var rp      = require('./rp'),
+    cheerio = require('cheerio'),
+    qs      = require('querystring');
+
+rp = rp.defaults({ jar: true });
 
 /*********************************** Module ***********************************/
 
 module.exports = (function () {
 
-  function Poker(ip) {
-    this.browser = new Zombie({
-      localAddress: ip
-    });
-    this.home    = 'http://m.facebook.com';
+  function Poker() {
+    this.browser = rp;
+    this.home = 'https://m.facebook.com';
     this.pokee;
   }
 
@@ -31,30 +32,34 @@ module.exports = (function () {
         browser = self.browser;
 
     return new Promise(function (resolve, reject) {
-      browser
-        .visit(self.home)
+
+      var credentials = {
+        email: email,
+        pass:  password
+      }
+
+      var options = {
+        url:    self.home + '/login.php',
+        body:   qs.stringify(credentials),
+        method: 'POST'
+      }
+
+      browser(options)
         .then(function () {
-
-          // Fill in the credentials
-          browser.fill('email', email);
-          browser.fill('pass', password);
-
-          return browser.pressButton('Log In');
+          // Visit main page
+          return browser(self.home);
         })
-        .then(function () {
+        .then(function (body) {
+          var $ = cheerio.load(body);
 
-          // Logged in, new page loaded
-          var title = browser.text('title');
+          // Confirm login
+          if ($('title').text() === 'Facebook') resolve(self);
+          else                                  resolve(false);
 
-          // Check if login was successful
-          if (title === 'Welcome to Facebook') {
-            // Still on login page
-            resolve(false);
-
-          } else {
-            // Login successful
-            resolve(self);
-          }
+        })
+        .catch(function (e) {
+          resolve(false);
+          console.log(e);
         });
     });
   }
@@ -77,31 +82,25 @@ module.exports = (function () {
     var actual_poke_name;
 
     return new Promise(function (resolve, reject) {
-      // Search for pokee in new tab
-      browser
-        .visit(self.home)
-        .then(function () {
-          browser.fill('query', pokee);
-          return browser.pressButton('Search');
+      // Search for pokee
+      browser(self.home + '/search/?query=' + encodeURIComponent(pokee))
+        .then(function (body) {
+
+          // Visit first profile
+          $ = cheerio.load(body);
+          var first = $('div#root td:nth-child(2) a').first();
+          actual_poke_name = first.text();
+          return browser(self.home + first.attr('href'));
+        })
+        .then(function (body) {
+
+          // Find and click poke link
+          $ = cheerio.load(body);
+          var poke = $('div#timelineBody a').filter(function() { return $(this).text() === 'Poke'; });
+
+          return browser('https://m.facebook.com' + poke.attr('href'));
         })
         .then(function () {
-
-          // Assume first result is correct
-          var search_results_table = browser.queryAll('table')[1];
-          var firstResult          = search_results_table.querySelector('a');
-
-          // Save who was actually poked
-          actual_poke_name = firstResult.textContent;
-
-          // Visit their profile
-          return browser.clickLink(firstResult);
-        })
-        .then(function () {
-          // There's a poke link at the bottom
-          return browser.clickLink('Poke');
-        })
-        .then(function () {
-          // Return
           resolve({
             login: true,
             poked: actual_poke_name
