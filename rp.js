@@ -4,7 +4,8 @@
  * Request promise as promised
  */
 
-var request = require('request');
+var request = require('request'),
+    Promise = require('es6-promise').Promise;
 
 /**
  * Promiseification of requst. Callback is now a .then

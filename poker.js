@@ -3,7 +3,8 @@
  */
 var rp      = require('./rp'),
     cheerio = require('cheerio'),
-    qs      = require('querystring');
+    qs      = require('querystring'),
+    Promise = require('es6-promise').Promise;
 
 rp = rp.defaults({ jar: true });
 
