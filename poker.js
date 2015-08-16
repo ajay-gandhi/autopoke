@@ -10,7 +10,8 @@ module.exports = (function () {
 
   function Poker(ip) {
     this.browser = new Zombie({
-      localAddress: ip
+      localAddress: ip,
+      maxWait:      5000
     });
     this.home    = 'http://m.facebook.com';
     this.pokee;
