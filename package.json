@@ -6,7 +6,7 @@
   "dependencies": {
     "es6-promise": "^3.0.2",
     "express": "^4.13.3",
-    "zombie": "^2.x.x"
+    "zombie": "^3.x.x"
   },
   "devDependencies": {},
   "scripts": {
