@@ -9,7 +9,7 @@ address and password, and the name of someone to automatically poke.
 The server will then periodically check if that person has been poked (via
 headless browser). If they haven't, the server pokes them for the user.
 
-## Usage
+## Setup
 
 Clone the git repo, the `cd` into it:
 
@@ -19,6 +19,24 @@ Clone the git repo, the `cd` into it:
 Run `npm install` to install any Node.js packages that the server uses:
 
     $ npm install
+
+Create a file in the root directory called `captcha.json`, and store your
+secret reCAPTCHA key there:
+
+```json
+{
+  key: 'your-secret-key'
+}
+```
+
+Then, in `html/index.html`, update this line of HTML to contain your reCAPTCHA
+public key (in `data-sitekey`):
+
+```html
+<div class="g-recaptcha" data-sitekey="6LeqUwsTAAAAAPVccUcS9OaxhLIpcdYPtr50Im3t"></div><br />
+```
+
+## Usage
 
 You're ready to go! Run `node app.js` to start the server.
 

@@ -47,14 +47,24 @@ $(document).ready(function() {
       data: {
         email:    $('input#email').val(),
         password: $('input#password').val(),
-        pokee:    $('input#pokee').val()
+        pokee:    $('input#pokee').val(),
+        captcha:  grecaptcha.getResponse()
       }
     }).done(function (results) {
-      // Re enable button
+      // Re enable button and new captcha
       $('button').prop('disabled', false);
+      grecaptcha.reset();
 
       // Was login successful?
-      if (results.login) {
+      if (!results.captcha) {
+        $('div#result')
+          .css({
+            border: '2px solid #D9534F',
+            color:  '#D9534F'
+          })
+          .text('Captcha failed.');
+
+      } else if (results.login) {
         $('div#result')
           .css({
             border: '2px solid #5Cb85C',

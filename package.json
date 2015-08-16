@@ -1,6 +1,6 @@
 {
   "name": "autopoke",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Automatically poke people on Facebook",
   "main": "app.js",
   "dependencies": {

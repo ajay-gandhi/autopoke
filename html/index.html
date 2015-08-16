@@ -5,8 +5,9 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="style.css" />
   <title>Facebook Autopoker</title>
-  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-  <script type="text/javascript" src="main.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="main.js"></script>
+  <script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 <body>
   <div class="container-fluid" id="new-poker">
@@ -27,9 +28,11 @@
         <label class="sr-only" for="pokee">Pokee</label>
         <input type="text" class="form-control new-poker-input" id="pokee" name="pokee" placeholder="Full name" />
       </div>
+      <div class="g-recaptcha" data-sitekey="6LeqUwsTAAAAAPVccUcS9OaxhLIpcdYPtr50Im3t"></div><br />
       <p class="text-center">
         <button type="submit" id="autopoke" class="btn btn-default btn-lg">Autopoke</button>
       </p>
+      <small>Note: Submitting too many autopoke requests may get your Facebook account suspended</small>
     </form>
   </div>
 </body>
