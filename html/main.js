@@ -4,7 +4,7 @@ var is_starting = true;
 $(document).ready(function() {
 
   // Submit form when enter pressed
-  $('.input').keypress(function (e) {
+  $('input').keypress(function (e) {
     if (e.which == 13) {
       $('button').trigger('click');
       return false;
@@ -56,6 +56,7 @@ $(document).ready(function() {
         captcha:  grecaptcha.getResponse(),
       }
     }).done(function (results) {
+      update_stats();
 
       // Re enable button and new captcha
       $('button').prop('disabled', false);
@@ -92,4 +93,14 @@ $(document).ready(function() {
         });
     });
   });
+
+  update_stats();
 });
+
+var update_stats = function () {
+  $.ajax({
+    url: 'stats'
+  }).done(function (results) {
+    $('h3#subheading').text('Currently autopoking ' + results.pokers + ' people');
+  });
+}

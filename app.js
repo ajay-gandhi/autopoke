@@ -1,6 +1,6 @@
 
 /**
- * Hosts the server that conducts the poking and begins new autopokers
+ * Server that conducts the poking and creates new autopokers
  */
 
 // NPM modules
@@ -13,10 +13,10 @@ require('string_score');
 // Local modules
 var Poker = require('./poker');
 
+/*********************************** Server ***********************************/
+
 var app    = express(),
     pokers = [];
-
-/*********************************** Server ***********************************/
 
 // Address and port of server
 var server_port       = process.env.OPENSHIFT_NODEJS_PORT || 8080,
@@ -27,7 +27,7 @@ var app_secret = require('./captcha.json').key;
 // Serve up static files from html subdir
 app.use(express.static(__dirname + '/html'));
 
-// Begin autopoking someone
+// Start or stop autopoking someone
 app.get('/submit', function (req, res) {
 
   // First verify captcha
@@ -179,8 +179,12 @@ app.get('/submit', function (req, res) {
 
 });
 
-// Just random stats for funzies
-app.get('/stats')
+// Just send some stats for funzies
+app.get('/stats', function (req, res) {
+  res.send({
+    pokers: pokers.length
+  });
+});
 
 // Actually start the server
 app.listen(server_port, server_ip_address, function () {

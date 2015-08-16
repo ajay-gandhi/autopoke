@@ -10,23 +10,24 @@
   <script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 <body>
-  <div class="container-fluid" id="new-poker">
+  <div class="container-fluid" id="main">
     <h1>Facebook Autopoker</h1>
+    <h3 id="subheading"></h3>
     <div id="result"></div>
-    <form role="form" id="new-poker-form">
+    <form role="form" id="poker-form">
       <p class="lead">Facebook Login</p>
       <div class="form-group">
         <label class="sr-only" for="email">Email</label>
-        <input type="text" class="form-control new-poker-input" id="email" name="email" placeholder="Email" autofocus />
+        <input type="text" class="form-control poker-input" id="email" name="email" placeholder="Email" autofocus />
       </div>
       <div class="form-group">
         <label class="sr-only" for="password">Password</label>
-        <input type="password" class="form-control new-poker-input" id="password" name="password" placeholder="Password" />
+        <input type="password" class="form-control poker-input" id="password" name="password" placeholder="Password" />
       </div>
       <div class="form-group" id="pokee">
         <p class="lead">Who should we poke?</p>
         <label class="sr-only" for="pokee">Pokee</label>
-        <input type="text" class="form-control new-poker-input" id="pokee" name="pokee" placeholder="Full name" />
+        <input type="text" class="form-control poker-input" id="pokee" name="pokee" placeholder="Full name" />
       </div>
       <div class="g-recaptcha" data-sitekey="6LeqUwsTAAAAAPVccUcS9OaxhLIpcdYPtr50Im3t"></div><br />
       <p class="text-center">

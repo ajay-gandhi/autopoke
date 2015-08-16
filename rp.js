@@ -2,6 +2,7 @@
 
 /**
  * Request promise as promised
+ * Written by @mrkev on GitHub
  */
 
 var request = require('request'),
