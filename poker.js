@@ -34,6 +34,9 @@ module.exports = (function () {
       browser
         .visit(self.home)
         .then(function () {
+          return browser.wait();
+        })
+        .then(function () {
 
           // Fill in the credentials
           browser.fill('email', email);
