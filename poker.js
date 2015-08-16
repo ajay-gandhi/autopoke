@@ -9,9 +9,11 @@ var Zombie  = require('zombie'),
 module.exports = (function () {
 
   function Poker(ip) {
+    Zombie.waitDuration = '30s';
     this.browser = new Zombie({
       localAddress: ip,
-      maxWait:      5000
+      maxWait:      30000,
+      waitDuration: 30000
     });
     this.home    = 'http://m.facebook.com';
     this.pokee;
