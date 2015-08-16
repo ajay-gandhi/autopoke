@@ -1,17 +1,29 @@
 
 $(document).ready(function() {
-  $('div#result').css({
-    opacity: '0',
-    padding: '0px 10px',
-    height: '1px'
-  });
+  $('div#result')
+    .css({
+      opacity: '0',
+      height: '1px'
+    })
+    .click(function () {
+      // Hide the result box onclick
+      $('div#result')
+        .animate({
+          opacity: '0.0',
+          height: '1px'
+        }, {
+          duration: 500
+        });
+    });
 
   $('button').click(function (e) {
+    // Disable button
+    $(this).prop('disabled', true);
+
     // Hide the result box
     $('div#result')
       .animate({
         opacity: '0.0',
-        padding: '0px 10px',
         height: '1px'
       }, {
         duration: 500
@@ -29,7 +41,8 @@ $(document).ready(function() {
         pokee:    $('input#pokee').val()
       }
     }).done(function (results) {
-      // var results = JSON.parse(results);
+      // Re enable button
+      $('button').prop('disabled', false);
 
       // Was login successful?
       if (results.login) {
@@ -52,7 +65,6 @@ $(document).ready(function() {
       $('div#result')
         .animate({
           opacity: '1.0',
-          padding: '10px',
           height: '50px'
         }, {
           duration: 500

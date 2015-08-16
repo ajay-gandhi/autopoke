@@ -12,6 +12,8 @@ var Poker = require('./poker');
 var app    = express(),
     pokers = [];
 
+/*********************************** Server ***********************************/
+
 // Address and port of server
 var server_port       = 8080,
     server_ip_address = '127.0.0.1';
@@ -27,26 +29,36 @@ app.get('/begin', function (req, res) {
       pokee    = req.query.pokee;
 
   // Make a new poker
-  var newPoker = new Poker();
+  var newPoker = new Poker(),
+      inited;
 
   // Initialize the poker with the given email and pw, then poke the person
   newPoker
     .init(email, password)
     .then(function (initialized) {
 
-      if (initialized == false)
+      if (initialized == false) {
         // Login failed
         return {
           login: false,
           poked: false
         }
 
-      else return initialized.poke(pokee);
+      } else {
+        inited = initialized;
+        return initialized.poke(pokee);
+      }
 
     })
     .then(function (result) {
       // Just send result
       res.send(result);
+
+      // Add to array if successful
+      if (result.poked) {
+        pokers.push(inited);
+        console.log(email, 'is now autopoking', result.poked);
+      }
     })
     .catch(function (err) {
       console.log(err);
@@ -57,3 +69,30 @@ app.get('/begin', function (req, res) {
 app.listen(server_port, server_ip_address, function () {
   console.log('Server running at', server_ip_address + ':' +server_port);
 });
+
+/********************************* Autopoking *********************************/
+
+/**
+ * Iterate over the array of pokers, poking each
+ */
+var iterate_poke = function () {
+  pokers.forEach(function (poker, index) {
+    console.log('lets try');
+    poker
+      .poke()
+      .then(function (result) {
+        console.log(result);
+        // Just delete the poker if it fails for some reason
+        if (!result.poked) pokers.splice(index - 1, 1);
+      });
+  });
+
+  // Set timeout again
+  setTimeout(function () {
+    iterate_poke();
+  }, 30000);
+}
+
+setTimeout(function () {
+  iterate_poke();
+}, 30000);

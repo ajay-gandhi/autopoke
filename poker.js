@@ -11,6 +11,7 @@ module.exports = (function () {
   function Poker() {
     this.browser = new Zombie();
     this.home    = 'http://m.facebook.com';
+    this.pokee;
   }
 
   /**
@@ -38,16 +39,18 @@ module.exports = (function () {
 
           return browser.pressButton('Log In');
         })
-        .then(function() {
+        .then(function () {
+
           // Logged in, new page loaded
-          // Check if login was successful
           var title = browser.text('title');
+
+          // Check if login was successful
           if (title === 'Welcome to Facebook') {
             // Still on login page
             resolve(false);
+
           } else {
             // Login successful
-            self.browser = browser;
             resolve(self);
           }
         });
@@ -62,8 +65,12 @@ module.exports = (function () {
    * @returns [Promise] True if the person was poked, otherwise false
    */
   Poker.prototype.poke = function (pokee) {
-    var self    = this,
-        browser = self.browser;
+    var self       = this,
+        browser    = self.browser;
+
+    // Save or fetch pokee
+    if (!pokee) pokee = self.pokee;
+    else        self.pokee = pokee;
 
     var actual_poke_name;
 
@@ -93,6 +100,7 @@ module.exports = (function () {
         })
         .then(function () {
           // Return
+          console.log('Just poked', actual_poke_name);
           resolve({
             login: true,
             poked: actual_poke_name
