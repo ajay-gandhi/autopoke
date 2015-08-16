@@ -8,8 +8,10 @@ var Zombie  = require('zombie'),
 
 module.exports = (function () {
 
-  function Poker() {
-    this.browser = new Zombie();
+  function Poker(ip) {
+    this.browser = new Zombie({
+      localAddress: ip
+    });
     this.home    = 'http://m.facebook.com';
     this.pokee;
   }

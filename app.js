@@ -29,7 +29,7 @@ app.get('/begin', function (req, res) {
       pokee    = req.query.pokee;
 
   // Make a new poker
-  var newPoker = new Poker(),
+  var newPoker = new Poker(server_ip_address),
       inited;
 
   // Initialize the poker with the given email and pw, then poke the person
