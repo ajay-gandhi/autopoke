@@ -15,6 +15,7 @@ module.exports = (function () {
   function Poker() {
     this.browser = rp;
     this.home = 'https://m.facebook.com';
+    this.email;
     this.pokee;
   }
 
@@ -54,8 +55,12 @@ module.exports = (function () {
           var $ = cheerio.load(body);
 
           // Confirm login
-          if ($('title').text() === 'Facebook') resolve(self);
-          else                                  resolve(false);
+          if ($('title').text() === 'Facebook') {
+            self.email = email;
+            resolve(self);
+          } else {
+            resolve(false);
+          }
 
         })
         .catch(function (e) {
@@ -78,7 +83,6 @@ module.exports = (function () {
 
     // Save or fetch pokee
     if (!pokee) pokee = self.pokee;
-    else        self.pokee = pokee;
 
     var actual_poke_name;
 
@@ -102,6 +106,9 @@ module.exports = (function () {
           return browser('https://m.facebook.com' + poke.attr('href'));
         })
         .then(function () {
+          // Save pokee
+          self.pokee = actual_poke_name;
+
           resolve({
             login: true,
             poked: actual_poke_name

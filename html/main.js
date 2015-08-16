@@ -1,4 +1,6 @@
 
+var is_starting = true;
+
 $(document).ready(function() {
 
   // Submit form when enter pressed
@@ -26,8 +28,10 @@ $(document).ready(function() {
     });
 
   $('button').click(function (e) {
-    // Disable button
-    $(this).prop('disabled', true);
+    // Disable buttons
+    $('button').prop('disabled', true);
+
+    var is_starting = $(this).attr('id') === 'start-poking';
 
     // Hide the result box
     $('div#result')
@@ -43,42 +47,40 @@ $(document).ready(function() {
 
     // AJAX to server
     $.ajax({
-      url: 'begin',
+      url: 'submit',
       data: {
         email:    $('input#email').val(),
         password: $('input#password').val(),
         pokee:    $('input#pokee').val(),
-        captcha:  grecaptcha.getResponse()
+        start_p:  is_starting,
+        captcha:  grecaptcha.getResponse(),
       }
     }).done(function (results) {
+
       // Re enable button and new captcha
       $('button').prop('disabled', false);
       grecaptcha.reset();
 
-      // Was login successful?
-      if (!results.captcha) {
-        $('div#result')
-          .css({
-            border: '2px solid #D9534F',
-            color:  '#D9534F'
-          })
-          .text('Captcha failed.');
-
-      } else if (results.login) {
+      if (results.success) {
+        // Success
         $('div#result')
           .css({
             border: '2px solid #5Cb85C',
             color:  '#5Cb85C'
           })
-          .text('Login successful. Poked: ' + results.poked);
+          .text('Login successful. ' +
+                ((is_starting)
+                  ? 'Poked: ' + results.success
+                  : 'Stopped poking: ' + results.success));
 
       } else {
+        // Some error
         $('div#result')
           .css({
             border: '2px solid #D9534F',
             color:  '#D9534F'
           })
-          .text('Login failed.');
+          .text(results.reason);
       }
 
       $('div#result')
