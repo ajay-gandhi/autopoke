@@ -100,7 +100,6 @@ module.exports = (function () {
         })
         .then(function () {
           // Return
-          console.log('Just poked', actual_poke_name);
           resolve({
             login: true,
             poked: actual_poke_name

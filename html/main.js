@@ -1,5 +1,14 @@
 
 $(document).ready(function() {
+
+  // Submit form when enter pressed
+  $('.input').keypress(function (e) {
+    if (e.which == 13) {
+      $('button').trigger('click');
+      return false;
+    }
+  });
+
   $('div#result')
     .css({
       opacity: '0',

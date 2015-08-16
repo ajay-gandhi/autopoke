@@ -77,11 +77,9 @@ app.listen(server_port, server_ip_address, function () {
  */
 var iterate_poke = function () {
   pokers.forEach(function (poker, index) {
-    console.log('lets try');
     poker
       .poke()
       .then(function (result) {
-        console.log(result);
         // Just delete the poker if it fails for some reason
         if (!result.poked) pokers.splice(index - 1, 1);
       });
