@@ -60,7 +60,7 @@ module.exports = (function () {
         })
         .catch(function (e) {
           resolve(false);
-          console.log(e);
+          console.trace(e);
         });
     });
   }
@@ -112,7 +112,7 @@ module.exports = (function () {
             login: true,
             poked: false
           });
-          console.log(e);
+          console.trace(e);
         });
     });
   }
