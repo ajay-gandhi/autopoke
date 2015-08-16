@@ -37,7 +37,6 @@ module.exports = (function () {
       browser
         .visit(self.home)
         .then(function () {
-          browser.dump();
 
           // Fill in the credentials
           browser.fill('email', email);
