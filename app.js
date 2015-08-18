@@ -145,7 +145,7 @@ app.get('/submit', function (req, res) {
                 });
 
                 // Delete poker at max index
-                if (max_idx) {
+                if (max_idx || max_idx == 0) {
                   pokers.splice(max_idx - 1, 1);
 
                   console.log(email, 'is no longer poking', stopped_poking);
