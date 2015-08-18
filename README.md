@@ -45,3 +45,8 @@ You're ready to go! Run `node app.js` to start the server.
 Note that stopping the server will end all autopokes, since nothing is stored
 permanently. All login information and names are stored in JavaScript variables
 on the server.
+
+## Contributions
+
+Shoutout to [mrkev](http://github.com/mrkev) for writing the promisified version
+of [request](http://npmjs.org/package/request) used in this project.
